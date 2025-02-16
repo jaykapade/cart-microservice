@@ -43,11 +43,11 @@ func (r *PostgresRepository) GetOrdersForAccount(ctx context.Context, accountID 
 		o.created_at,
 		o.account_id,
 		o.total_price::money::numeric::float8,
-		o.product_id,
-		o.quantity,
+		op.product_id,
+		op.quantity
 		FROM orders o JOIN order_products op ON o.id = op.order_id 
 		WHERE o.account_id = $1
-		ORDERBY o.created_at DESC`,
+		ORDER BY o.created_at DESC`,
 		accountID,
 	)
 	if err != nil {
